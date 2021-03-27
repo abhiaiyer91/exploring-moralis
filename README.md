@@ -2,6 +2,6 @@
 
 A Gatsby Application building common features in web applications backed by Moralis
 
-You can follow me on twitter https://twitter.com/abhiaiyer
-If you're interested in Gatsby JS http://gatsbyjs.com/
-And take a look at Moralis at https://moralis.io/
+- Follow me on twitter https://twitter.com/abhiaiyer
+- If you're interested in GatsbyJS http://gatsbyjs.com/
+- Take a look at Moralis at https://moralis.io/
