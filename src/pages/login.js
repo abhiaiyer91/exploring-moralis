@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const wrapper = {
@@ -8,7 +8,6 @@ const wrapper = {
   justifyContent: `center`,
   flexDirection: `column`,
   height: `100vh`,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
 };
 
 const loginCard = {
@@ -20,8 +19,13 @@ const loginCard = {
   alignSelf: `center`,
   padding: `48px 16px`,
   color: `rgb(197,250,3)`,
+  textAlign: `center`,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 };
+
+const header = { textAlign: `center`, margin: `0 0 8px` };
+
+const paragraph = { margin: `0 0 24px` };
 
 const button = {
   borderRadius: `4px`,
@@ -32,37 +36,26 @@ const button = {
   cursor: `pointer`,
 };
 
-const buttonWrapper = {
-  textAlign: `center`,
-};
-
-// markup
-const IndexPage = () => {
-  const { logout, currentUser } = useAuth();
-  const user = currentUser();
-  const userAddress = user.get("ethAddress");
-
+export default function Login() {
+  const { login } = useAuth();
   return (
-    <main style={wrapper}>
-      <title>Home Page</title>
-
+    <section style={wrapper}>
       <div style={loginCard}>
-        <p>ETH Address: {userAddress}</p>
-        <div style={buttonWrapper}>
-          <button
-            style={button}
-            onClick={() => {
-              return logout().catch((e) => {
-                console.error(e);
-              });
-            }}
-          >
-            LOG OUT
-          </button>
-        </div>
-      </div>
-    </main>
-  );
-};
+        <h1 style={header}>Welcome to the App</h1>
 
-export default IndexPage;
+        <p style={paragraph}>You can try out logging in below!</p>
+
+        <button
+          style={button}
+          onClick={() => {
+            return login().catch((e) => {
+              console.error(e);
+            });
+          }}
+        >
+          LOG IN
+        </button>
+      </div>
+    </section>
+  );
+}
