@@ -40,7 +40,7 @@ const buttonWrapper = {
 const IndexPage = () => {
   const { logout, currentUser } = useAuth();
   const user = currentUser();
-  const userAddress = user.get("ethAddress");
+  const userAddress = user?.get("ethAddress");
 
   return (
     <main style={wrapper}>

@@ -6,8 +6,10 @@ export function useAuth() {
   return {
     login: async () => {
       try {
-        const user = await Moralis.Web3.authenticate();
-        navigate("/");
+        if (typeof window !== `undefined`) {
+          await Moralis.Web3.authenticate();
+          navigate("/");
+        }
       } catch (e) {
         console.error(e.message, e);
       }
@@ -15,15 +17,19 @@ export function useAuth() {
 
     logout: async () => {
       try {
-        await Moralis.User.logOut();
-        navigate("/login");
+        if (typeof window !== `undefined`) {
+          await Moralis.User.logOut();
+          navigate("/login");
+        }
       } catch (e) {
         console.error(e.message, e);
       }
     },
 
     currentUser: () => {
-      return Moralis.User.current();
+      if (typeof window !== `undefined`) {
+        return Moralis.User.current();
+      }
     },
   };
 }
