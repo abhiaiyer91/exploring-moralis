@@ -6,10 +6,8 @@ export function useAuth() {
   return {
     login: async () => {
       try {
-        if (typeof window !== `undefined`) {
-          await Moralis.Web3.authenticate();
-          navigate("/");
-        }
+        await Moralis?.Web3.authenticate();
+        navigate("/");
       } catch (e) {
         console.error(e.message, e);
       }
@@ -17,19 +15,15 @@ export function useAuth() {
 
     logout: async () => {
       try {
-        if (typeof window !== `undefined`) {
-          await Moralis.User.logOut();
-          navigate("/login");
-        }
+        await Moralis?.User.logOut();
+        navigate("/login");
       } catch (e) {
         console.error(e.message, e);
       }
     },
 
     currentUser: () => {
-      if (typeof window !== `undefined`) {
-        return Moralis.User.current();
-      }
+      return Moralis?.User.current();
     },
   };
 }

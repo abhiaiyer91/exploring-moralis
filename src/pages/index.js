@@ -1,3 +1,4 @@
+import { navigate } from "gatsby-link";
 import * as React from "react";
 import { useAuth } from "../hooks/useAuth";
 
@@ -41,6 +42,12 @@ const IndexPage = () => {
   const { logout, currentUser } = useAuth();
   const user = currentUser();
   const userAddress = user?.get("ethAddress");
+
+  React.useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
 
   return (
     <main style={wrapper}>
