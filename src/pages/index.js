@@ -33,9 +33,11 @@ const IndexPage = () => {
     <Layout>
       <p>ETH Address: {userAddress}</p>
 
-      <Link to="/profile" style={{ color: `rgb(197,250,3)` }}>
-        Profile
-      </Link>
+      <div style={{ marginBottom: `16px` }}>
+        <Link to="/profile" style={{ color: `rgb(197,250,3)` }}>
+          Profile
+        </Link>
+      </div>
 
       <div style={buttonWrapper}>
         <button
