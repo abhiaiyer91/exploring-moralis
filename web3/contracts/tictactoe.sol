@@ -71,6 +71,39 @@ contract GameType {
         }
         return id;
     }
+
+    // Function used to restart the game, it's possible only if there's not
+    // appended balance.
+    function restart(string calldata _id) private {
+        Game storage g = games[_id];
+        if (g.balance == 0) {
+            g.turn = 1;
+            g.opposition = payable(address(0));
+            g.time_limit = 0;
+        }
+    }
+
+    // This function is called in order to claim the reward in case the opponent
+    // exceed the time limit.
+    function claim_reward(string calldata _id) public {
+        Game storage g = games[_id];
+
+        if (
+            g.opposition != address(0) &&
+            g.balance > 0 &&
+            block.timestamp > g.time_limit
+        ) {
+            if (g.turn == 2) g.owner.transfer(g.balance);
+            else g.opposition.transfer(g.balance);
+            g.balance = 0;
+            restart(_id);
+        }
+    }
+
+    // Debug function to print out the current block timestamp
+    function get_blocktimestamp() public view returns (uint256) {
+        return (block.timestamp);
+    }
 }
 
 // contract TicTacToe {
@@ -153,23 +186,6 @@ contract GameType {
 //         }
 //     }
 
-//     // This function is called in order to claim the reward in case the opponent
-//     // exceed the time limit.
-//     function claim_reward(address payable host) public {
-//         Game storage g = games[host];
-
-//         if (
-//             g.opposition != address(0) &&
-//             g.balance > 0 &&
-//             block.timestamp > g.time_limit
-//         ) {
-//             if (g.turn == 2) host.transfer(g.balance);
-//             else g.opposition.transfer(g.balance);
-//             g.balance = 0;
-//             restart(host);
-//         }
-//     }
-
 //     function check(
 //         address host,
 //         uint256 player,
@@ -218,59 +234,4 @@ contract GameType {
 //         if (count >= 9) return true;
 //     }
 
-//     // Function used to restart the game, it's possible only if there's not
-//     // appended balance.
-//     function restart(address payable host) private {
-//         Game storage g = games[host];
-//         if (g.balance == 0) {
-//             g.turn = 1;
-//             g.opposition = payable(address(0));
-//             g.time_limit = 0;
-
-//             for (uint256 r = 0; r < 3; r++)
-//                 for (uint256 c = 0; c < 3; c++) g.board[r][c] = 0;
-//         }
-//     }
-
-//     // Debug function to print some attributes of the game
-//     function get_game_status(address host)
-//         public
-//         view
-//         returns (
-//             uint256,
-//             uint256,
-//             address,
-//             uint256,
-//             uint256,
-//             uint256
-//         )
-//     {
-//         Game storage g = games[host];
-//         uint256 row1 =
-//             (100 * (g.board[0][0] + 1)) +
-//                 (10 * (g.board[0][1] + 1)) +
-//                 (g.board[0][2] + 1);
-//         uint256 row2 =
-//             (100 * (g.board[1][0] + 1)) +
-//                 (10 * (g.board[1][1] + 1)) +
-//                 (g.board[1][2] + 1);
-//         uint256 row3 =
-//             (100 * (g.board[2][0] + 1)) +
-//                 (10 * (g.board[2][1] + 1)) +
-//                 (g.board[2][2] + 1);
-
-//         return (
-//             games[host].balance,
-//             games[host].turn,
-//             games[host].opposition,
-//             row1,
-//             row2,
-//             row3
-//         );
-//     }
-
-//     // Debug function to print out the current block timestamp
-//     function get_blocktimestamp() public view returns (uint256) {
-//         return (block.timestamp);
-//     }
 // }
