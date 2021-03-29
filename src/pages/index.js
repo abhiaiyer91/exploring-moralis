@@ -38,6 +38,11 @@ const IndexPage = () => {
           Profile
         </Link>
       </div>
+      <div style={{ marginBottom: `16px` }}>
+        <Link to="/game" style={{ color: `rgb(197,250,3)` }}>
+          Game
+        </Link>
+      </div>
 
       <div style={buttonWrapper}>
         <button
